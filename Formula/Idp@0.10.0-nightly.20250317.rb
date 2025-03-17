@@ -19,7 +19,7 @@ class IdpAT0100Nightly20250317 < Formula
     end
     if Hardware::CPU.arm?
       url "https://github.com/cnoe-io/idpbuilder/releases/download/v0.10.0-nightly.20250317/idpbuilder-darwin-arm64.tar.gz"
-      sha256 "9ae4f0e1c3e8b3619cc82d1a97fd2cf257835b76732b70ef3d530843e02057a2"
+      sha256 "ee85fa6fba2fc491fd48e38b033a7b640f48ea7ca771447a543dfdca7aac626b"
 
       def install
         bin.install "idpbuilder"

@@ -4,7 +4,7 @@
 #
 require "fileutils"
 
-class IdpbuilderAT090 < Formula
+class IdpAT090 < Formula
   homepage "https://github.com/cnoe-io/idpbuilder"
 
   v = "v0.9.0"

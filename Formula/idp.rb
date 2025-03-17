@@ -1,14 +1,12 @@
-#
 # Generated through hack/update-taps.sh. Don't edit manually.
-# Next line is used to identify version of the file.
-# idpbuilder_version:0.10.0-nightly.20250317
 #
-class IdpAT0100Nightly20250317 < Formula
-  desc ""
-  homepage "https://cnoe.io"
-  v = "0.10.0-nightly.20250317"
+require "fileutils"
+
+class IdpAT090 < Formula
+  homepage "https://github.com/cnoe-io/idpbuilder"
+  v = "v0.9.0"
   version v
-  
+
   if OS.mac? && Hardware::CPU.intel?
     url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-darwin-amd64.tar.gz"
     sha256 ""

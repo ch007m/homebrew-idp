@@ -18,6 +18,8 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+VERSION_TO_TEST=${1:-}
+
 # Retrieve version from given Idpbuilder repository tags
 function get_latest_release_version() {
     local org_name="$1"
@@ -114,7 +116,8 @@ EOF
 }
 
 function generateNightlyFormulaClassname() {
-  echo "${IDP_CLI_VERSION}" | grep "\-nightly" > /dev/null &&  echo "${IDP_CLI_VERSION}" | sed -e 's/[\.\-]//g' | sed -e 's/n/N/' | xargs -I {} echo "IdpAT{}" || echo "Idp"
+  local version=$1
+  echo "${version}" | grep "\-nightly" > /dev/null && echo "${version}" | sed -e 's/[\.\-]//g' | sed -e 's/n/N/' | xargs -I {} echo "IdpAT{}" || echo "Idp"
 }
 
 function generateFormulaClassname() {
@@ -128,26 +131,37 @@ readonly REPO_ROOT_DIR
 
 pushd $REPO_ROOT_DIR/Formula
 
-# Get sem version from idpbuilder.rb file, in format x.y.z
-current_homebrew_version=$(cat "idp.rb" | grep "idpbuilder_version:" | cut -d ':' -f2)
+if [[ -z ${VERSION_TO_TEST} ]]; then
+  # Get latest released version from cnoe-io/idpbuilder git repository
+  LATEST_IDP_VERSION=$(get_latest_release_version "cnoe-io" "idpbuilder")
+else
+  LATEST_IDP_VERSION=${VERSION_TO_TEST}
+fi
 
-# Get latest released version from cnoe-io/idpbuilder git repository
-IDP_CLI_VERSION=$(get_latest_release_version "cnoe-io" "idpbuilder")
-#IDP_CLI_VERSION="0.9.0"
-
-# If this a nightly release, simply generate a new Formula
-if [[ ${IDP_CLI_VERSION} == *"nightly"* ]]; then
-  echo "This is a nightly build"
-  nightly_formula_filename="idp@${IDP_CLI_VERSION}.rb"
-  generate_tap_file "${nightly_formula_filename}" "${IDP_CLI_VERSION}" "$(generateNightlyFormulaClassname)"
+#
+# If this a nightly release, simply generate a new Formula file
+# Remark: The Classname should be generated from the version as such:
+#
+# '@' replaced with 'AT'
+# Dots '.' en dashes '-' removed
+# First letter of a word uppercases
+#
+# File name:  idp@0.10.0-nightly.20250317.rb
+# Class name: IdpAT0100Nightly20250317
+#
+if [[ ${LATEST_IDP_VERSION} == *"nightly"* ]]; then
+  nightly_formula_filename="idp@${LATEST_IDP_VERSION}.rb"
+  generate_tap_file "${nightly_formula_filename}" "${LATEST_IDP_VERSION}" "$(generateNightlyFormulaClassname ${LATEST_IDP_VERSION})"
   exit 0
 fi
 
+# Get sem version from idpbuilder.rb file, in format x.y.z
+current_homebrew_version=$(cat "idp.rb" | grep "idpbuilder_version:" | cut -d ':' -f2)
 
-echo "Generate definition for older release first"
-old_release_filename="idp@${current_homebrew_version}.rb"
-generate_tap_file "${old_release_filename}" "${current_homebrew_version}" "$(generateFormulaClassname ${current_homebrew_version})"
+echo "Generate the formula file for the old release: idp@${current_homebrew_version}.rb"
+old_formula_filename="idp@${current_homebrew_version}.rb"
+generate_tap_file "${old_formula_filename}" "${current_homebrew_version}" "$(generateFormulaClassname ${current_homebrew_version})"
 
 echo "--------------------------------------"
-echo "Generate the new release idp.rb file"
-generate_tap_file "idp.rb" "${IDP_CLI_VERSION}" "$(generateFormulaClassname ${IDP_CLI_VERSION})"
+echo "Generate the formula file idp.rb for the new release: ${LATEST_IDP_VERSION}"
+generate_tap_file "idp.rb" "${LATEST_IDP_VERSION}" "$(generateFormulaClassname ${LATEST_IDP_VERSION})"

@@ -32,4 +32,5 @@ Install the latest released version
 A specific version:
 
 `brew install idp@0.8.1`
+
 `brew install idp@0.10.0-nightly.20250317`

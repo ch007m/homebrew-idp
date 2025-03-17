@@ -22,17 +22,11 @@ To do so, label your PR as `pr-pull` and the workflow will be triggered.
 
 ## How do I install these formulae?
 
-`brew install -d ch007m/idp/idp@0.9.0`
+Latest one
 
-Or `brew tap ch007m/idp` and then `brew install <formula>`.
+`brew install -d ch007m/idp/idp`
 
-Or, in a [`brew bundle`](https://github.com/Homebrew/homebrew-bundle) `Brewfile`:
+A specific version:
 
-```ruby
-tap "ch007m/idp"
-brew "<formula>"
-```
-
-## Documentation
-
-`brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh).
+`brew install -d ch007m/idp/idp@0.8.1`
+`brew install -d ch007m/idp/idp@0.10.0-nightly.20250317`

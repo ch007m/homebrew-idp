@@ -6,7 +6,7 @@
 class IdpAT0100Nightly20250317 < Formula
   desc ""
   homepage "https://cnoe.io"
-  v = "0.10.0-nightly.20250317"
+  v = "v0.10.0-nightly.20250317"
   version v
   
   if OS.mac? && Hardware::CPU.intel?

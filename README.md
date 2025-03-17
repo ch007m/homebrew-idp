@@ -22,11 +22,14 @@ To do so, label your PR as `pr-pull` and the workflow will be triggered.
 
 ## How do I install these formulae?
 
-Latest one
-
-`brew install -d ch007m/idp/idp`
+Tap the repository locally
+```shell
+brew tap ch007m/idp
+```
+Install the latest released version
+`brew install idp`
 
 A specific version:
 
-`brew install -d ch007m/idp/idp@0.8.1`
-`brew install -d ch007m/idp/idp@0.10.0-nightly.20250317`
+`brew install idp@0.8.1`
+`brew install idp@0.10.0-nightly.20250317`

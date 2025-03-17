@@ -1,5 +1,5 @@
 # Generated through hack/update-taps.sh. Don't edit manually.
-#
+# idpbuilder_version:0.9.0
 require "fileutils"
 
 class Idp < Formula

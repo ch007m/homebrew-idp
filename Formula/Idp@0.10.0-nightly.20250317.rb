@@ -3,7 +3,7 @@
 # Next line is used to identify version of the file.
 # idpbuilder_version:0.10.0-nightly.20250317
 #
-class IdpAT0100nightly20250317 < Formula
+class IdpAT0100-nightly20250317 < Formula
   desc ""
   homepage "https://cnoe.io"
   version "0.10.0-nightly.20250317"

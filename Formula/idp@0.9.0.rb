@@ -11,33 +11,25 @@ class IdpAT090 < Formula
   version v
 
   if OS.mac? && Hardware::CPU.intel?
-    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-darwin-amd64"
+    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-darwin-amd64.tar.gz"
     sha256 ""
   elsif OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-darwin-arm64"
+    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-darwin-arm64.tar.gz"
     sha256 ""
   elsif OS.linux? && Hardware::CPU.arm?
-    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-linux-arm64"
+    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-linux-arm64.tar.gz"
     sha256 ""
   else
-    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-linux-amd64"
+    url "https://github.com/cnoe-io/idpbuilder/releases/download/#{v}/idpbuilder-linux-amd64.tar.gz"
     sha256 ""
   end
 
   def install
-    if OS.mac? && Hardware::CPU.intel?
-      FileUtils.mv("idpbuilder-darwin-amd64", "idpbuilder")
-    elsif OS.mac? && Hardware::CPU.arm?
-      FileUtils.mv("idpbuilder-darwin-arm64", "idpbuilder")
-    elsif OS.linux? && Hardware::CPU.arm?
-      FileUtils.mv("idpbuilder-linux-arm64", "idpbuilder")
-    else
-      FileUtils.mv("idpbuilder-linux-amd64", "idpbuilder")
-    end
-    bin.install "idpbuilder"
+    FileUtils.mv("idpbuilder", "idp")
+    bin.install "idp"
   end
 
   test do
-    system "#{bin}/idpbuilder --version"
+    system "#{bin}/idp --version"
   end
 end
